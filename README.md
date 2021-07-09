@@ -10,4 +10,4 @@ Currently work in progress. 作成中
 * []  more than 2 color options 
 
 <h1> Example 2021/07/09 Rain dragon
-<img src="./test_pic/Tengui_raindragon.png" width="600">
+<img src="/test_pic/Tenugui_raindragon.png" width="600">
