@@ -4,7 +4,7 @@ This code create a Tengui, a japanese style cloth patter from a simple desing lo
 Currently work in progress. 作成中
 <br>
 
-* [X]　Bacis code (pattern_edit.py) 2021/07/09
+* [X]  　Bacis code (pattern_edit.py) 2021/07/09
 * [X]  GoogleColob Notebook 2021/07/10
 * [ ]  Multiple patterns 
 * [ ]  more than 2 color options 
