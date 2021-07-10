@@ -5,13 +5,15 @@ Currently work in progress. 作成中
 <br>
 
 * [X]　Bacis code (pattern_edit.py) 2021/07/09
-* [X]  GoogleColob Notebook
-* []  Multiple patterns 
-* []  more than 2 color options 
+* [X]  GoogleColob Notebook 2021/07/10
+* [ ]  Multiple patterns 
+* [ ]  more than 2 color options 
 
 <h2> Run notebook 
-* Create_design_notebook.ipynb [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/https://github.com/JarvisSan22/Tenugui_creater_opencv/blob/master/Create_design_notebook.ipynb)
+* Create_design_notebook.ipynb
+[Open with Colab](https://colab.research.google.com/github/JarvisSan22/Tenugui_creater_opencv/blob/master/Create_design_notebook.ipynb)
 
+ 
 <h1>Desgin Creation example (2021/07/10) </h1>
 <img src="process.png" width="600">
 <h1> Example 2021/07/09 Rain dragon
