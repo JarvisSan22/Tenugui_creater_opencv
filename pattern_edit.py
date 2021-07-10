@@ -38,9 +38,11 @@ def grayhist(img):
 def Threshold(img,min_limit=None, max_limit=256,plot=False):
     _, binary = cv2.threshold (img, min_limit,max_limit, cv2.THRESH_BINARY)
     b_max=np.max(binary)
-    if b_max>=255:
+    if b_max!=255:
       mask=binary[:,:,:]==[b_max,b_max,b_max]
       binary[np.logical_or.reduce(mask,axis=2)]=[255,255,255]
+      
+
 
     if plot:
         plt.imshow(binary, cmap="gray")
@@ -86,6 +88,49 @@ def grayscale_3channel(img):
     gray_3C[:,:,i]=img_gray
   return gray_3C
 
+def ExtractContours(img,graythresholds,topcuts,sidecuts,plot=True):
+  if len(img.shape)!=2: #not gray scale 
+    img_gray=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+  else:
+    img_gray=img
+
+  #Binary
+  thresh, binary = cv2.threshold (img_gray, graythresholds[0], graythresholds[1], cv2.THRESH_BINARY)
+  
+  #輪郭の抽出と描画 cv2findControus
+  contours, hierarchy = cv2.findContours( binary,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+  im2_draw_line = np.copy(img)
+  contour_list=[] 
+  for contour in contours:
+    #print(contour)
+    c_area=cv2.contourArea(contour)
+    if c_area>100:
+      m=contour.mean(axis=0)[0]
+   
+      if ((m[0]<topcuts[0]) or (m[0]>topcuts[1]))&((m[1]<sidecuts[0]) or (m[1]>sidecuts[1]))==False:
+        #print(len(contour),c_area)
+        #print(contour.shape)
+        contour_list.append(contour)
+        #continue
+        cv2.polylines(im2_draw_line,contour,True,(255,0,0),3)
+  # 輪郭線の入った画像を表示
+  #Turn Contours into img
+  w,h=img_gray.shape
+  img_pl = np.zeros((w,h))
+  cv2.fillPoly(img_pl,pts=contour_list,color=(255,255,255))
+  print(img_pl.shape)
+  if plot:
+      fig,axs=plt.subplots(1,3)
+      axs[0].imshow(binary, cmap="gray")
+      axs[0].set_title("binary")
+      axs[1].imshow(cv2.cvtColor(im2_draw_line, cv2.COLOR_BGR2RGB))
+      axs[1].set_title("Contours on orignal")
+      axs[2].imshow(img_pl)
+      axs[2].set_title("Contours filled")
+      for ax in axs:
+        ax.axis('off')
+  return img_pl
+
 
 #模様を作成する##################################################
 #ゼロのArreyに加える方法
@@ -96,7 +141,7 @@ def CmtoPx(cm):
 def CmtoPx(cm):
   #https://www.unitconverters.net/typography/centimeter-to-pixel-x.htm
   return int(cm*37.7952755906)
-def CreatePatten(img,hcm,wcm,padcm,buff_w=20,buff_h=20,rotation=True,angle=None,plot=True):
+def createPattern(img,hcm,wcm,padcm,buff_w=20,buff_h=20,rotation=True,angle=None,plot=True):
   
   bhcm=hcm+padcm #cm #66
   bwcm=wcm+padcm #cm #36
@@ -160,10 +205,13 @@ def CreatePatten(img,hcm,wcm,padcm,buff_w=20,buff_h=20,rotation=True,angle=None,
   return croped_array
 
 def colorpatten(pattern,black_color,white_color,plot=True):
+  back_c=np.min(pattern) #Background color 
+  front_c=np.max(pattern) #Object color 
+
   colored_patten=pattern.copy()
-  maskc1= colored_patten==[0,0,0]
+  maskc1= colored_patten==[back_c,back_c,back_c]
   colored_patten[np.logical_or.reduce(maskc1,axis=2)]=white_color
-  maskc2=pattern[:,:,:]==[255,255,255]
+  maskc2=pattern[:,:,:]==[front_c,front_c,front_c]
   colored_patten[np.logical_or.reduce(maskc2,axis=2)]=black_color
   if plot==True:
     plt.figure(figsize=(10,15))
@@ -187,7 +235,7 @@ def main():
   wcm=60 #cm #36
   padcm=0
   angle=55
-  Pattern=CreatePatten(img_resize,hcm,wcm,padcm,rotation=True,angle=angle)
+  Pattern=createPattern(img_resize,hcm,wcm,padcm,rotation=True,angle=angle)
   #色を付ける
   c2=[20,42,90]
   c1=[183,233,244]
