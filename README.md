@@ -11,7 +11,7 @@ Currently work in progress. 作成中
 
 <h2> Run notebook </h2>
 
-* Create_design_notebook.ipynb [Open with Colab](https://colab.research.google.com/github/JarvisSan22/Tenugui_creater_opencv/blob/master/Create_design_notebook.ipynb)
+* Create_design_notebook.ipynb [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/JarvisSan22/Tenugui_creater_opencv/blob/master/Create_design_notebook.ipynb)
 
  
 <h1>Desgin Creation example (2021/07/10) </h1>
