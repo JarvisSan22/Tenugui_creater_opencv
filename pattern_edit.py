@@ -207,7 +207,8 @@ def createPattern(img,hcm,wcm,padcm,buff_w=20,buff_h=20,rotation=True,angle=None
 def colorpatten(pattern,black_color,white_color,plot=True):
   back_c=np.min(pattern) #Background color 
   front_c=np.max(pattern) #Object color 
-
+  #Binarization  二値化
+  _,pattern=cv2.threshold(pattern, back_c, front_c, cv2.THRESH_BINARY)
   colored_patten=pattern.copy()
   maskc1= colored_patten==[back_c,back_c,back_c]
   colored_patten[np.logical_or.reduce(maskc1,axis=2)]=white_color
