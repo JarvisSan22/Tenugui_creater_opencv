@@ -13,7 +13,9 @@ Currently work in progress. 作成中
 
 * Create_design_notebook.ipynb [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/JarvisSan22/Tenugui_creater_opencv/blob/master/Create_design_notebook.ipynb)
 
- 
+<h1>Design create example, color inversion & contours added 20210711</h1>
+<img src="Hikonyan_20210711.png" width="600">
+
 <h1>Desgin Creation example (2021/07/10) </h1>
 <img src="process.png" width="600">
 <h1> Example 2021/07/09 Rain dragon
