@@ -141,7 +141,7 @@ def CmtoPx(cm):
 def CmtoPx(cm):
   #https://www.unitconverters.net/typography/centimeter-to-pixel-x.htm
   return int(cm*37.7952755906)
-def createPattern(img,hcm,wcm,padcm,buff_w=20,buff_h=20,rotation=True,angle=None,plot=True):
+def createPatern(img,hcm,wcm,padcm,buff_w=20,buff_h=20,rotation=True,angle=None,plot=True):
   
   bhcm=hcm+padcm #cm #66
   bwcm=wcm+padcm #cm #36
@@ -208,11 +208,13 @@ def colorpatten(pattern,black_color,white_color,plot=True):
   back_c=np.min(pattern) #Background color 
   front_c=np.max(pattern) #Object color 
   #Binarization  二値化
-  _,pattern=cv2.threshold(pattern, back_c, front_c, cv2.THRESH_BINARY)
+  _,thresh=cv2.threshold(pattern, back_c, front_c, cv2.THRESH_BINARY)
   colored_patten=pattern.copy()
-  maskc1= colored_patten==[back_c,back_c,back_c]
-  colored_patten[np.logical_or.reduce(maskc1,axis=2)]=white_color
-  maskc2=pattern[:,:,:]==[front_c,front_c,front_c]
+  maskc1= thresh==[back_c,back_c,back_c]
+  if white_color:
+    colored_patten[np.logical_or.reduce(maskc1,axis=2)]=white_color
+  if black_color:
+    maskc2=thresh==[front_c,front_c,front_c]
   colored_patten[np.logical_or.reduce(maskc2,axis=2)]=black_color
   if plot==True:
     plt.figure(figsize=(10,15))
@@ -236,7 +238,7 @@ def main():
   wcm=60 #cm #36
   padcm=0
   angle=55
-  Pattern=createPattern(img_resize,hcm,wcm,padcm,rotation=True,angle=angle)
+  Pattern=createPatern(img_resize,hcm,wcm,padcm,rotation=True,angle=angle)
   #色を付ける
   c2=[20,42,90]
   c1=[183,233,244]
